@@ -27,6 +27,13 @@ window/size/height=1080
 
 pointing/emulate_touch_from_mouse=true
 
+[layer_names]
+
+2d_physics/layer_1="level"
+2d_physics/layer_2="player"
+2d_render/layer_3="enemi"
+2d_physics/layer_3="enemy"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
