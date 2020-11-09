@@ -1,0 +1,153 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Menu/Map/Map.gd" type="Script" id=1]
+[ext_resource path="res://Menu/Map/map.jpg" type="Texture" id=2]
+[ext_resource path="res://Menu/Level-map/level-map.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Player/Sprites/Idle0 copia.png" type="Texture" id=4]
+[ext_resource path="res://Menu/MenuController.gd" type="Script" id=5]
+[ext_resource path="res://Menu/Level/LevelMenu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=7]
+
+[sub_resource type="StreamTexture" id=1]
+flags = 4
+load_path = "res://.import/level-map1.png-bb3f1962ee7f64d5253d1ad3f8bd020d.stex"
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = SubResource( 1 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = SubResource( 1 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = SubResource( 1 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = SubResource( 1 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = SubResource( 1 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 10, 9.87408 )
+
+[node name="Map" type="Area2D"]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource( 1 )
+levels = 5
+
+[node name="Maps" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite" parent="Maps"]
+position = Vector2( 1600, 540 )
+texture = ExtResource( 2 )
+
+[node name="Level1" parent="Maps" instance=ExtResource( 3 )]
+editor/display_folded = true
+position = Vector2( 140.948, 538.014 )
+z_index = 0
+z_as_relative = false
+bestscore = [ 0, 25 ]
+midscore = [ 0, 45 ]
+
+[node name="Sprite" parent="Maps/Level1" index="0"]
+texture = SubResource( 2 )
+
+[node name="Level2" parent="Maps" instance=ExtResource( 3 )]
+editor/display_folded = true
+position = Vector2( 744.248, 652.752 )
+z_index = 0
+z_as_relative = false
+bestscore = [ 1, 15 ]
+midscore = [ 2, 33 ]
+
+[node name="Sprite" parent="Maps/Level2" index="0"]
+texture = SubResource( 3 )
+
+[node name="Level3" parent="Maps" instance=ExtResource( 3 )]
+editor/display_folded = true
+position = Vector2( 1311.99, 656.024 )
+z_index = 0
+z_as_relative = false
+
+[node name="Sprite" parent="Maps/Level3" index="0"]
+texture = SubResource( 4 )
+
+[node name="Level4" parent="Maps" instance=ExtResource( 3 )]
+editor/display_folded = true
+position = Vector2( 1537.2, 289.221 )
+z_index = 0
+z_as_relative = false
+
+[node name="Sprite" parent="Maps/Level4" index="0"]
+texture = SubResource( 5 )
+
+[node name="Level5" parent="Maps" instance=ExtResource( 3 )]
+position = Vector2( 2237, 570.957 )
+z_index = 0
+z_as_relative = false
+
+[node name="Sprite" parent="Maps/Level5" index="0"]
+texture = SubResource( 6 )
+
+[node name="Player" type="Sprite" parent="Maps"]
+position = Vector2( 150.948, 498.014 )
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 960, 540 )
+scale = Vector2( 96, 54.7 )
+z_as_relative = false
+shape = SubResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+rect_min_size = Vector2( 1920, 1080 )
+script = ExtResource( 5 )
+
+[node name="LevelMenu" parent="Menu" instance=ExtResource( 6 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="ScoreMenu" parent="Menu" instance=ExtResource( 7 )]
+visible = false
+
+[node name="MusicMenu" type="AudioStreamPlayer" parent="." groups=[
+"Music",
+]]
+
+[connection signal="input_event" from="." to="." method="_on_Map_input_event"]
+[connection signal="input_event" from="Maps/Level1" to="." method="_on_Level1_input_event"]
+[connection signal="input_event" from="Maps/Level2" to="." method="_on_Level2_input_event"]
+[connection signal="input_event" from="Maps/Level3" to="." method="_on_Level3_input_event"]
+[connection signal="input_event" from="Maps/Level4" to="." method="_on_Level4_input_event"]
+[connection signal="input_event" from="Maps/Level5" to="." method="_on_Level5_input_event"]
+[connection signal="score" from="Menu" to="." method="_on_Menu_score"]
+[connection signal="play" from="Menu/LevelMenu" to="." method="_on_LevelMenu_play"]
+
+[editable path="Maps/Level1"]
+
+[editable path="Maps/Level2"]
+
+[editable path="Maps/Level3"]
+
+[editable path="Maps/Level4"]
+
+[editable path="Maps/Level5"]

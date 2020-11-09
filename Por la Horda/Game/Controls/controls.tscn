@@ -15,23 +15,23 @@
 position = Vector2( 160, 920 )
 normal = ExtResource( 1 )
 pressed = ExtResource( 2 )
-action = "ui_left"
+action = "touch_left"
 
 [node name="right_button" type="TouchScreenButton" parent="."]
 position = Vector2( 260, 920 )
 normal = ExtResource( 3 )
 pressed = ExtResource( 4 )
-action = "ui_right"
+action = "touch_right"
 
 [node name="jump_button" type="TouchScreenButton" parent="."]
 position = Vector2( 1680, 920 )
 normal = ExtResource( 5 )
 pressed = ExtResource( 6 )
-action = "ui_up"
+action = "touch_jump"
 
 [node name="stop_button" type="TouchScreenButton" parent="."]
 position = Vector2( 1580, 920 )
 normal = ExtResource( 7 )
 pressed = ExtResource( 8 )
-action = "ui_down"
+action = "touch_stop"
 

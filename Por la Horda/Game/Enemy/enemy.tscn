@@ -1,36 +1,39 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game/Enemy/enemy.gd" type="Script" id=1]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-1.png" type="Texture" id=2]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-2.png" type="Texture" id=3]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-3.png" type="Texture" id=4]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-4.png" type="Texture" id=5]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-5.png" type="Texture" id=6]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-6.png" type="Texture" id=7]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-7.png" type="Texture" id=8]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-8.png" type="Texture" id=9]
-[ext_resource path="res://Game/Enemy/Sprites/enemy-walk-9.png" type="Texture" id=10]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-1.png" type="Texture" id=2]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-2.png" type="Texture" id=3]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-3.png" type="Texture" id=4]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-4.png" type="Texture" id=5]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-5.png" type="Texture" id=6]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-6.png" type="Texture" id=7]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-7.png" type="Texture" id=8]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-8.png" type="Texture" id=9]
+[ext_resource path="res://Game/Enemy/Sprites/enemy-9.png" type="Texture" id=10]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ],
 "loop": true,
 "name": "walk",
-"speed": 5.0
+"speed": 10.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 44, 85 )
+extents = Vector2( 30, 52 )
 
-[node name="enemy" type="KinematicBody2D"]
+[node name="enemy" type="KinematicBody2D" groups=[
+"enemy",
+]]
+z_index = 2
 collision_layer = 4
-collision_mask = 2
+collision_mask = 73
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "walk"
-frame = 1
+frame = 6
 playing = true
 
 [node name="CollisionShapeLevel" type="CollisionShape2D" parent="."]

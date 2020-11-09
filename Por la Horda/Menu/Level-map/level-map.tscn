@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Menu/Level-map/level-map.gd" type="Script" id=1]
+
+[sub_resource type="StreamTexture" id=4]
+flags = 4
+load_path = "res://.import/level-map1.png-bb3f1962ee7f64d5253d1ad3f8bd020d.stex"
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = SubResource( 4 )
+region = Rect2( 0, 0, 180, 123 )
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 51.4526
+height = 3.11343
+
+[node name="Level-map" type="Area2D" groups=[
+"map_level",
+]]
+z_index = 6
+collision_layer = 64
+collision_mask = 0
+script = ExtResource( 1 )
+bestscore = [ 0, 0 ]
+midscore = [ 0, 0 ]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 37, 15 )
+texture = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1.5394, 3.99441 )
+shape = SubResource( 3 )
+
