@@ -11,22 +11,42 @@ func _ready():
 
 func set_level(_level):
 	$MenuBackground/VBoxContainer/Level.text = str(_level)
+	
+	set_highscore()
 
 func _on_ScoreButton_pressed():
-	self.visible = false;
-	menu_controller.change_score_menu("ScoreMenu","LevelMenu")
+	menu_controller.animate_menu(3,"ScoreMenu","LevelMenu")
 
 func _on_PlayButton_pressed():
 	emit_signal("play")
 
 func _on_CrossButton_pressed():
-	menu_controller.visible = false
+	emit_signal("exit")
 
 func _on_ReplayButton_pressed():
 	emit_signal("restart")
 
-func _on_MapButton_pressed():
-	emit_signal("exit")
+func set_highscore():
+	var score_sec = global.level_score["secscore_"+str(global.current_level)]
+	var score_min = global.level_score["minscore_"+str(global.current_level)]
+	var stars = global.level_score["stars_"+str(global.current_level)]
+	if score_sec < 10 && score_min < 10:
+		str_score = "0%d:0%.2f" % [score_min,score_sec]
+	if score_sec < 10 && score_min > 10:
+		str_score = "%d:0%.2f" % [score_min,score_sec]
+	if score_sec > 10 && score_min < 10:
+		str_score = "0%d:%.2f" % [score_min,score_sec]
+	if score_sec > 10 && score_min > 10:
+		str_score = "%d:%.2f" % [score_min,score_sec]
+	$MenuBackground/VBoxContainer/HighScoreBackground/HighScore.text = str_score
+	if stars == 3:
+		$MenuBackground/VBoxContainer/Stars.texture.region = Rect2(0, 750, 600, 250)
+	if stars == 2:
+		$MenuBackground/VBoxContainer/Stars.texture.region = Rect2(0, 500, 600, 250)
+	if stars == 1:
+		$MenuBackground/VBoxContainer/Stars.texture.region = Rect2(0, 250, 600, 250)
+	if stars == 0:
+		$MenuBackground/VBoxContainer/Stars.texture.region = Rect2(0, 0, 600, 250)
 
 func set_score(_minutes, _seconds, _score_min, _score_sec, _players_dead, _stars):
 	if _seconds < 10 && _minutes < 10:
@@ -56,3 +76,6 @@ func set_score(_minutes, _seconds, _score_min, _score_sec, _players_dead, _stars
 			$MenuBackground/VBoxContainer/Scoreboard/Score/Stars.texture.region = Rect2(0, 500, 600, 250)
 		1:
 			$MenuBackground/VBoxContainer/Scoreboard/Score/Stars.texture.region = Rect2(0, 250, 600, 250)
+
+func _on_MapButton_pressed():
+	emit_signal("exit")

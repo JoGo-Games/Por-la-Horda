@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Game/Door/door.gd" type="Script" id=1]
 [ext_resource path="res://Game/Door/Sprites/door-7.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Game/Door/Sprites/door-3.png" type="Texture" id=6]
 [ext_resource path="res://Game/Door/Sprites/door-2.png" type="Texture" id=7]
 [ext_resource path="res://Game/Door/Sprites/door-1.png" type="Texture" id=8]
+[ext_resource path="res://Sfx/Door.ogg" type="AudioStream" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -37,6 +38,10 @@ position = Vector2( 0, 40 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
+
+[node name="DoorSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "Sfx"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

@@ -11,8 +11,7 @@ func _ready():
 #	pass
 
 func _on_BackButton_pressed():
-	self.visible = false;
-	menu_controller.back_menu(previous_menu)
+	menu_controller.animate_menu(1,previous_menu,"ScoreMenu")
 	
 func set_score(_bestscore,_midscore):
 	$Background/VBoxContainer/HBoxContainer2/Time/TimeLabel.text = _midscore

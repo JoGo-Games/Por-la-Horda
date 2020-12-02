@@ -78,7 +78,7 @@ func _ready():
 
 func _on_Area2D_body_entered(body):
 	body.swim(position.y)
-
+	$WaterSound.play()
 
 func _on_Area2D_body_exited(body):
-	body.swim()
+	$WaterSound.stop()

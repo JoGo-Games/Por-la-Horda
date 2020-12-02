@@ -21,8 +21,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-global="*res://global.gd"
 data="*res://data.gd"
+global="*res://global.gd"
 
 [debug]
 
@@ -32,8 +32,9 @@ settings/fps/force_fps=60
 
 window/size/width=1920
 window/size/height=1080
+window/size/resizable=false
 window/stretch/mode="2d"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
 
 [input]
 
@@ -72,7 +73,6 @@ pointing/emulate_touch_from_mouse=true
 
 2d_physics/layer_1="level"
 2d_physics/layer_2="player"
-2d_render/layer_3="enemi"
 2d_physics/layer_3="enemy"
 2d_physics/layer_4="dead_player"
 2d_physics/layer_5="water"

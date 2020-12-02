@@ -91,4 +91,6 @@ texture_pressed = ExtResource( 11 )
 stretch_mode = 3
 
 [connection signal="pressed" from="VBoxContainer/MenuBackground/VBoxContainer/playbutton" to="." method="_on_playbutton_pressed"]
+[connection signal="pressed" from="VBoxContainer/MenuBackground/VBoxContainer/helpbutton" to="." method="_on_helpbutton_pressed"]
 [connection signal="pressed" from="VBoxContainer/MenuBackground/VBoxContainer/optionsbutton" to="." method="_on_optionsbutton_pressed"]
+[connection signal="pressed" from="VBoxContainer/MenuBackground/VBoxContainer/creditsbutton" to="." method="_on_creditsbutton_pressed"]

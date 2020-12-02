@@ -10,6 +10,7 @@ var time:float = 0.0
 var seconds:float = 0.0
 var minutes:int = 0
 var stars = 0
+var score
 
 func _ready():
 	var newlevel = load("res://Game/Levels/Level" + str(global.current_level) + ".tscn")
@@ -25,43 +26,63 @@ func _process(delta):
 	$UI/Gui.set_time(minutes, seconds)
 
 func _on_Gui_pause():
+	$UI/Menucontroller/ButtonSound.play()
 	get_tree().paused = true
-	$UI/MainMenu.visible = true
+	$UI/Menucontroller.visible = true
+	$UI/Menucontroller/AnimationPlayer.play_backwards("Fade")
 
 func _on_InGameMenu_restart():
-	change_scene("Game",0)
+	$UI/PlaySound.play()
+	$UI/Menucontroller.soundon = false
+	get_tree().paused = false
+	$UI/Menucontroller.change_scene("Game",0)
 
 func _on_InGameMenu_exit():
-	change_scene("Map",1)
+	get_tree().paused = false
+	$UI/Menucontroller.change_scene("Map",0)
 
 func on_playinglevel_level_pass():
+	$UI/VictorySound.play()
 	get_tree().paused = true
 	player_score = players_dead*10
 	score_sec = seconds + player_score
 	score_min = minutes
-	if score_sec > 60:
+	if score_sec >= 60:
 		score_min += 1
 		score_sec -= 60
-	if score_min <= global.current_bestscore[0] && score_sec <= global.current_bestscore[1]:
-		stars = 3
-	if score_min <= global.current_midscore[0] && score_sec <= global.current_midscore[1]:
+	score = score_min*60 + score_sec
+	if score <= global.current_midscore_total:
 		stars = 2
+	if score <= global.current_bestscore_total:
+		stars = 3
 	if stars == 0:
 		stars = 1
-	$UI/LevelPassMenu.set_score(minutes, seconds, score_min, score_sec, players_dead,stars)
-	$UI/LevelPassMenu.visible = true
-	
+	if score > global.level_score["minscore_"+str(global.current_level)] *60 + global.level_score["secscore_"+str(global.current_level)]:
+		global.level_score["minscore_"+str(global.current_level)] = score_min
+		global.level_score["secscore_"+str(global.current_level)] = score_sec
+		global.level_score["stars_"+str(global.current_level)] = stars
+	$UI/Menucontroller/LevelPassMenu.set_score(minutes, seconds, score_min, score_sec, players_dead,stars)
+	$UI/Menucontroller.visible = true
+	$UI/Menucontroller/LevelPassMenu.visible = true
+	$UI/Menucontroller/AnimationPlayer.play_backwards("Fade")
+	if global.current_level == global.level_unlocked:
+		global.level_unlocked += 1
+	data.save_data()
 
 func on_playinglevel_player_dead():
 	players_dead += 1
 	$UI/Gui/HBoxContainer/Lifes/LifesLabel.text = str(players_dead)
 
 func _on_LevelPassMenu_restart():
-	change_scene("Game",0)
+	get_tree().paused = false
+	$UI/Menucontroller.change_scene("Game",0)
 
 func _on_LevelPassMenu_exit():
-	change_scene("Map",1)
-
-func change_scene(_scene, _index):
 	get_tree().paused = false
-	global.change_scene(_scene,_index)
+	$UI/Menucontroller.change_scene("Map",0)
+
+func _on_MainMenu_resume():
+	$UI/Menucontroller/ButtonSound.play()
+	$UI/Menucontroller.resuming = true
+	$UI/Menucontroller/AnimationPlayer.play("Fade")
+

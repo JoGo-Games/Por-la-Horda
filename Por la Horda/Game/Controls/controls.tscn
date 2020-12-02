@@ -12,25 +12,25 @@
 [node name="controls" type="CanvasLayer"]
 
 [node name="left_button" type="TouchScreenButton" parent="."]
-position = Vector2( 160, 920 )
+position = Vector2( 160, 884.838 )
 normal = ExtResource( 1 )
 pressed = ExtResource( 2 )
 action = "touch_left"
 
 [node name="right_button" type="TouchScreenButton" parent="."]
-position = Vector2( 260, 920 )
+position = Vector2( 366.801, 882.988 )
 normal = ExtResource( 3 )
 pressed = ExtResource( 4 )
 action = "touch_right"
 
 [node name="jump_button" type="TouchScreenButton" parent="."]
-position = Vector2( 1680, 920 )
+position = Vector2( 1650.39, 884.838 )
 normal = ExtResource( 5 )
 pressed = ExtResource( 6 )
 action = "touch_jump"
 
 [node name="stop_button" type="TouchScreenButton" parent="."]
-position = Vector2( 1580, 920 )
+position = Vector2( 1450.46, 884.838 )
 normal = ExtResource( 7 )
 pressed = ExtResource( 8 )
 action = "touch_stop"

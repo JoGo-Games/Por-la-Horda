@@ -1,12 +1,16 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Menu/Map/Map.gd" type="Script" id=1]
 [ext_resource path="res://Menu/Map/map.jpg" type="Texture" id=2]
 [ext_resource path="res://Menu/Level-map/level-map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Game/Player/Sprites/Idle0 copia.png" type="Texture" id=4]
-[ext_resource path="res://Menu/MenuController.gd" type="Script" id=5]
-[ext_resource path="res://Menu/Level/LevelMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Menu/Map/back.png" type="Texture" id=5]
+[ext_resource path="res://Menu/MenuController.gd" type="Script" id=6]
+[ext_resource path="res://Menu/Level/LevelMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sfx/Menu-Button.ogg" type="AudioStream" id=9]
+[ext_resource path="res://BGM/Main-Theme.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Sfx/Drum.ogg" type="AudioStream" id=11]
 
 [sub_resource type="StreamTexture" id=1]
 flags = 4
@@ -37,8 +41,31 @@ flags = 4
 atlas = SubResource( 1 )
 region = Rect2( 0, 0, 180, 123 )
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://Menu/Resources/fredoka-one.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 80
+outline_size = 5
+font_data = SubResource( 7 )
+
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 10, 9.87408 )
+
+[sub_resource type="Animation" id=10]
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.000113975, 0.699441 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1080 ) ]
+}
 
 [node name="Map" type="Area2D"]
 collision_layer = 64
@@ -53,23 +80,22 @@ position = Vector2( 1600, 540 )
 texture = ExtResource( 2 )
 
 [node name="Level1" parent="Maps" instance=ExtResource( 3 )]
-editor/display_folded = true
 position = Vector2( 140.948, 538.014 )
 z_index = 0
 z_as_relative = false
-bestscore = [ 0, 25 ]
-midscore = [ 0, 45 ]
+bestscore = [ 0, 40 ]
+midscore = [ 1, 10 ]
 
 [node name="Sprite" parent="Maps/Level1" index="0"]
 texture = SubResource( 2 )
 
 [node name="Level2" parent="Maps" instance=ExtResource( 3 )]
 editor/display_folded = true
-position = Vector2( 744.248, 652.752 )
+position = Vector2( 749.827, 647.173 )
 z_index = 0
 z_as_relative = false
-bestscore = [ 1, 15 ]
-midscore = [ 2, 33 ]
+bestscore = [ 1, 0 ]
+midscore = [ 1, 25 ]
 
 [node name="Sprite" parent="Maps/Level2" index="0"]
 texture = SubResource( 3 )
@@ -79,6 +105,8 @@ editor/display_folded = true
 position = Vector2( 1311.99, 656.024 )
 z_index = 0
 z_as_relative = false
+bestscore = [ 0, 55 ]
+midscore = [ 1, 25 ]
 
 [node name="Sprite" parent="Maps/Level3" index="0"]
 texture = SubResource( 4 )
@@ -88,6 +116,8 @@ editor/display_folded = true
 position = Vector2( 1537.2, 289.221 )
 z_index = 0
 z_as_relative = false
+bestscore = [ 1, 25 ]
+midscore = [ 2, 0 ]
 
 [node name="Sprite" parent="Maps/Level4" index="0"]
 texture = SubResource( 5 )
@@ -96,6 +126,8 @@ texture = SubResource( 5 )
 position = Vector2( 2237, 570.957 )
 z_index = 0
 z_as_relative = false
+bestscore = [ 1, 20 ]
+midscore = [ 1, 50 ]
 
 [node name="Sprite" parent="Maps/Level5" index="0"]
 texture = SubResource( 6 )
@@ -105,33 +137,69 @@ position = Vector2( 150.948, 498.014 )
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 4 )
 
+[node name="Label" type="Label" parent="Maps"]
+margin_left = 2561.74
+margin_top = 388.127
+margin_right = 3161.74
+margin_bottom = 688.127
+rect_min_size = Vector2( 600, 300 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Coming Soon..."
+align = 1
+valign = 1
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 960, 540 )
 scale = Vector2( 96, 54.7 )
 z_as_relative = false
-shape = SubResource( 7 )
+shape = SubResource( 9 )
 __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = 62.7577
+margin_top = 46.1176
+margin_right = 166.758
+margin_bottom = 197.118
+rect_min_size = Vector2( 104, 151 )
+texture_normal = ExtResource( 5 )
+
 [node name="Menu" type="Control" parent="."]
 visible = false
+margin_top = 22.1639
+margin_right = 1920.0
+margin_bottom = 1102.16
 rect_min_size = Vector2( 1920, 1080 )
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
-[node name="LevelMenu" parent="Menu" instance=ExtResource( 6 )]
-visible = false
+[node name="LevelMenu" parent="Menu" instance=ExtResource( 7 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 
-[node name="ScoreMenu" parent="Menu" instance=ExtResource( 7 )]
+[node name="ScoreMenu" parent="Menu" instance=ExtResource( 8 )]
 visible = false
+
+[node name="ButtonSound" type="AudioStreamPlayer" parent="Menu"]
+stream = ExtResource( 9 )
+bus = "Sfx"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Menu"]
+anims/Fade = SubResource( 10 )
 
 [node name="MusicMenu" type="AudioStreamPlayer" parent="." groups=[
 "Music",
 ]]
+stream = ExtResource( 10 )
+volume_db = -20.0
+bus = "BGM"
+
+[node name="PlaySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+bus = "Sfx"
 
 [connection signal="input_event" from="." to="." method="_on_Map_input_event"]
 [connection signal="input_event" from="Maps/Level1" to="." method="_on_Level1_input_event"]
@@ -139,8 +207,11 @@ visible = false
 [connection signal="input_event" from="Maps/Level3" to="." method="_on_Level3_input_event"]
 [connection signal="input_event" from="Maps/Level4" to="." method="_on_Level4_input_event"]
 [connection signal="input_event" from="Maps/Level5" to="." method="_on_Level5_input_event"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
 [connection signal="score" from="Menu" to="." method="_on_Menu_score"]
+[connection signal="exit" from="Menu/LevelMenu" to="." method="_on_LevelMenu_exit"]
 [connection signal="play" from="Menu/LevelMenu" to="." method="_on_LevelMenu_play"]
+[connection signal="animation_finished" from="Menu/AnimationPlayer" to="Menu" method="_on_AnimationPlayer_animation_finished"]
 
 [editable path="Maps/Level1"]
 

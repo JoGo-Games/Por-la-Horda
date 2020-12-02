@@ -2,13 +2,13 @@
 
 [ext_resource path="res://Menu/Level-map/level-map.gd" type="Script" id=1]
 
-[sub_resource type="StreamTexture" id=4]
+[sub_resource type="StreamTexture" id=1]
 flags = 4
 load_path = "res://.import/level-map1.png-bb3f1962ee7f64d5253d1ad3f8bd020d.stex"
 
-[sub_resource type="AtlasTexture" id=5]
+[sub_resource type="AtlasTexture" id=2]
 flags = 4
-atlas = SubResource( 4 )
+atlas = SubResource( 1 )
 region = Rect2( 0, 0, 180, 123 )
 
 [sub_resource type="CapsuleShape2D" id=3]
@@ -27,7 +27,7 @@ midscore = [ 0, 0 ]
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 37, 15 )
-texture = SubResource( 5 )
+texture = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.5394, 3.99441 )

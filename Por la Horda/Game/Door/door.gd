@@ -3,11 +3,13 @@ extends Node2D
 var open:bool = false
 var knocks = false
 signal level_pass
+
 func _ready():
 	pass
 
 func _open():
 	if !open:
+		$DoorSound.play()
 		open = true
 		$AnimatedSprite.play("open")
 		if knocks:
@@ -15,6 +17,7 @@ func _open():
 
 func _close():
 	if open:
+		$DoorSound.play()
 		open = false
 		$AnimatedSprite.play("close")
 

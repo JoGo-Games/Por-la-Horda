@@ -1,13 +1,33 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Game/game.gd" type="Script" id=1]
 [ext_resource path="res://Game/Background/ParallaxBackground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/UI.gd" type="Script" id=3]
-[ext_resource path="res://Menu/Gui/Gui.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Menu/InGame/InGameMenu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Menu/Options/OptionsMenu.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Menu/Level-pass/LevelPassMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sfx/Drum.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Sfx/Victory.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Menu/Gui/Gui.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Menu/MenuController.gd" type="Script" id=7]
+[ext_resource path="res://Menu/InGame/InGameMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Menu/Options/OptionsMenu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Menu/Level-pass/LevelPassMenu.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Sfx/Menu-Button.ogg" type="AudioStream" id=12]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Fade"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 1080 ) ]
+}
 
 [node name="game" type="Node2D"]
 position = Vector2( 0, -2.78949 )
@@ -26,22 +46,46 @@ pause_mode = 2
 layer = 3
 script = ExtResource( 3 )
 
-[node name="Gui" parent="UI" instance=ExtResource( 4 )]
+[node name="PlaySound" type="AudioStreamPlayer" parent="UI"]
+stream = ExtResource( 4 )
+bus = "Sfx"
 
-[node name="MainMenu" parent="UI" instance=ExtResource( 5 )]
+[node name="VictorySound" type="AudioStreamPlayer" parent="UI"]
+stream = ExtResource( 5 )
+volume_db = -15.0
+bus = "Sfx"
+
+[node name="Gui" parent="UI" instance=ExtResource( 6 )]
+
+[node name="Menucontroller" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 0.000732422
+script = ExtResource( 7 )
+
+[node name="MainMenu" parent="UI/Menucontroller" instance=ExtResource( 8 )]
+
+[node name="OptionsMenu" parent="UI/Menucontroller" instance=ExtResource( 9 )]
 visible = false
 
-[node name="OptionsMenu" parent="UI" instance=ExtResource( 6 )]
+[node name="ScoreMenu" parent="UI/Menucontroller" instance=ExtResource( 10 )]
 visible = false
 
-[node name="ScoreMenu" parent="UI" instance=ExtResource( 7 )]
+[node name="LevelPassMenu" parent="UI/Menucontroller" instance=ExtResource( 11 )]
 visible = false
 
-[node name="LevelPassMenu" parent="UI" instance=ExtResource( 8 )]
-visible = false
+[node name="ButtonSound" type="AudioStreamPlayer" parent="UI/Menucontroller"]
+stream = ExtResource( 12 )
+bus = "Sfx"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Menucontroller"]
+anims/Fade = SubResource( 1 )
 
 [connection signal="pause" from="UI/Gui" to="." method="_on_Gui_pause"]
-[connection signal="exit" from="UI/MainMenu" to="." method="_on_InGameMenu_exit"]
-[connection signal="restart" from="UI/MainMenu" to="." method="_on_InGameMenu_restart"]
-[connection signal="exit" from="UI/LevelPassMenu" to="." method="_on_LevelPassMenu_exit"]
-[connection signal="restart" from="UI/LevelPassMenu" to="." method="_on_LevelPassMenu_restart"]
+[connection signal="exit" from="UI/Menucontroller/MainMenu" to="." method="_on_InGameMenu_exit"]
+[connection signal="restart" from="UI/Menucontroller/MainMenu" to="." method="_on_InGameMenu_restart"]
+[connection signal="resume" from="UI/Menucontroller/MainMenu" to="." method="_on_MainMenu_resume"]
+[connection signal="exit" from="UI/Menucontroller/LevelPassMenu" to="." method="_on_LevelPassMenu_exit"]
+[connection signal="restart" from="UI/Menucontroller/LevelPassMenu" to="." method="_on_LevelPassMenu_restart"]
+[connection signal="animation_finished" from="UI/Menucontroller/AnimationPlayer" to="UI/Menucontroller" method="_on_AnimationPlayer_animation_finished"]

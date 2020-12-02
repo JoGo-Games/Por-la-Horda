@@ -6,7 +6,13 @@ var panning = false
 export (int) var levels
 
 func _ready():  
+	$MusicMenu.play()
 	set_process_input(true)
+	var j = 1
+	while j < global.level_unlocked+1:
+		var level_node_unlocked = "Maps/Level" + str(j)
+		get_node(level_node_unlocked).level_unlocked()
+		j+=1
 	var i = global.level_unlocked+1
 	while i <= levels:
 		var level_node = "Maps/Level" + str(i)
@@ -44,50 +50,53 @@ func _on_Level1_input_event(viewport, event, shape_idx):
 	if event.is_action_pressed("ui_touch"):
 		$Maps/Player.position = $Maps/Level1.position + Vector2(10,-40)
 		current_level = 1
+		global.current_level = current_level
 		set_menu("Level 1")
-
 
 func _on_Level2_input_event(viewport, event, shape_idx):
 	if global.level_unlocked >= 2:
 		if event.is_action_pressed("ui_touch"):
 			$Maps/Player.position = $Maps/Level2.position + Vector2(10,-40)
 			current_level = 2
+			global.current_level = current_level
 			set_menu("Level 2")
-
 
 func _on_Level3_input_event(viewport, event, shape_idx):
 	if global.level_unlocked >= 3:
 		if event.is_action_pressed("ui_touch"):
 			$Maps/Player.position = $Maps/Level3.position + Vector2(10,-40)
 			current_level = 3
+			global.current_level = current_level
 			set_menu("Level 3")
-
 
 func _on_Level4_input_event(viewport, event, shape_idx):
 	if global.level_unlocked >= 4:
 		if event.is_action_pressed("ui_touch"):
 			$Maps/Player.position = $Maps/Level4.position + Vector2(10,-40)
 			current_level = 4
+			global.current_level = current_level
 			set_menu("Level 4")
-
 
 func _on_Level5_input_event(viewport, event, shape_idx):
 	if global.level_unlocked >= 5:
 		if event.is_action_pressed("ui_touch"):
 			$Maps/Player.position = $Maps/Level5.position + Vector2(10,-40)
 			current_level = 5
+			global.current_level = current_level
 			set_menu("Level 5")
 
 func set_menu(_level):
+	$Menu/ButtonSound.play()
 	$Menu.visible = true
+	$Menu/AnimationPlayer.play_backwards("Fade")
 	$Menu/LevelMenu.set_level(_level)
-	$Menu/LevelMenu.visible = true
-
 
 func _on_LevelMenu_play():
-	global.current_bestscore = get_node("Maps/Level"+str(current_level)).bestscore
-	global.current_midscore = get_node("Maps/Level"+str(current_level)).midscore
-	global.change_scene("Game",current_level)
+	$PlaySound.play()
+	$Menu.soundon = false
+	global.set_current_score(get_node("Maps/Level"+str(current_level)).bestscore,1)
+	global.set_current_score(get_node("Maps/Level"+str(current_level)).midscore,2)
+	$Menu.change_scene("Game",current_level)
 
 func _on_Menu_score():
 	var level_node = get_node("Maps/Level"+str(current_level))
@@ -102,3 +111,10 @@ func _on_Menu_score():
 	else:
 		str_midscore = "0%d:%.2f" % [level_node.midscore[0],level_node.midscore[1]]
 	$Menu/ScoreMenu.set_score(str_bestscore,str_midscore)
+
+func _on_LevelMenu_exit():
+	$Menu/ButtonSound.play()
+	$Menu/AnimationPlayer.play("Fade")
+
+func _on_TextureButton_pressed():
+	global.change_scene("MainMenu",0)
