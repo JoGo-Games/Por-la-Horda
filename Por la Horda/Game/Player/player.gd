@@ -1,25 +1,27 @@
 tool
 extends KinematicBody2D
 
+#Controlador de Player
+
 signal im_dead
 
-const GRAVITY = 800
+const GRAVITY = 800 
 var WATER_GRAVITY = 25
-const speed = 200.0
-const swim_speed = 100.0
+const speed = 200.0 
+const swim_speed = 100.0 
 const jump_speed = 600
 var move = Vector2.ZERO
-export var alive = true
-var dead = false
+export var alive = true #Variable para determinar si sigue vivo o si colisiono con un elemento que lo mató
+var dead = false  #Variable para determinar si está animando su muerte
 var direction:int
-var swimming = false
-var water_top
-var floating = false
+var swimming = false #Variable para determinar las fuerzas que afectan al jugador dentro del agua
+var water_top #Coordenada Y superior del tile del agua
+var floating = false #Determina si esta dentro del agua para evitar que salte
 var flip = false
-var capsuleshape = load("res://Game/Player/capsule_shape_2d.tres")
+var capsuleshape = load("res://Game/Player/capsule_shape_2d.tres") #Figura de colisión para cuando muere
 var capsule_height = 0
 var snap = Vector2(0,32)
-var is_static = false
+var is_static = false #Variable para determinar si esta muerto y quieto o si aun esta en movimiento
 
 var createsfx = load("res://Sfx/Create.ogg")
 var deathsfx = load("res://Sfx/Death.ogg")
@@ -32,7 +34,7 @@ func _ready():
 	snap = Vector2(0, 32)
 
 func _physics_process(delta):
-	if !is_static:
+	if !is_static: 
 		move(delta)
 		if !alive:
 			if !dead:
@@ -66,18 +68,18 @@ func _physics_process(delta):
 	if !Engine.is_editor_hint():
 		move_and_slide_with_snap(move, snap,Vector2(0,-1))
 
-func move(delta):
-	if is_on_floor():
+func move(delta): #Se encarga de mover a player dentro de los niveles
+	if is_on_floor(): #Setea la velocidad en Y a 0 cuando toca el suelo
 		move.y = 0
 		snap = Vector2(0,32)
-	if alive:
+	if alive: #Si aun sigue vivo escucha los toques de los controles 
 		if Input.is_action_just_pressed("touch_left"):
 			change_direction(true, -1)
 		if Input.is_action_just_pressed("touch_right"):
 			change_direction(false, 1)
 		if Input.is_action_just_pressed("touch_stop"):
 			direction = 0
-		if is_on_floor():
+		if is_on_floor(): #Si esta en el suelo puede saltar
 			if Input.is_action_just_pressed("touch_jump"):
 				$PlayerSound.stream = jumpsfx
 				$PlayerSound.play()
@@ -86,19 +88,19 @@ func move(delta):
 				move.y = -jump_speed
 		if swimming:
 			float_up()
-		if direction == 0:
+		if direction == 0: #Lo anima segun su movimiento
 			$AnimatedSprite.play("idle")
 		else:
 			$AnimatedSprite.play("walk")
-	if !swimming:
+	if !swimming: #Si esta en tierra, mueve al personaje normalmente
 		move.x = direction * speed
 		move.y += delta * GRAVITY
-	if is_on_ceiling():
+	if is_on_ceiling(): #Añade una fuerza en Y para que rebote contra el techo
 		if alive:
 			$AnimatedSprite.play("idle")
 		move.y = 50
 
-func change_direction(_state, _direction):
+func change_direction(_state, _direction): #Cambia la dirección de movimiento y del sprite y figura de colisión
 	if direction != _direction:
 		direction = _direction
 	if flip != _state:
@@ -106,7 +108,8 @@ func change_direction(_state, _direction):
 		$AnimatedSprite.flip_h = _state
 		$CollisionShape2D.position.x = -$CollisionShape2D.position.x
 
-func die():
+func die(): #Anima la muerte del jugador, cambiando la figura de colisión y haciendola rotar y crecer para adaptarse a la forma de player
+	#Evita que continúe colisionando con los pinchos
 	$PlayerSound.stream = deathsfx
 	$PlayerSound.play()
 	set_collision_mask_bit(6, false)
@@ -119,7 +122,7 @@ func die():
 		move.x = 0
 	$AnimatedSprite.modulate = Color(0.5,0.5,1.0)
 
-func swim(_water_top = 0):
+func swim(_water_top = 0): #Cambia los valores de las variables para indicar que está dentro del agua
 	if alive:
 		if move.y > 30:
 			$PlayerSound.stream = splashsfx
@@ -128,7 +131,7 @@ func swim(_water_top = 0):
 		water_top = _water_top
 		swimming = !swimming
 
-func float_up():
+func float_up(): #Mueve a player cuando se encuentra dentro del agua
 	move.x = direction * swim_speed
 	if position.y < water_top:
 		if floating:
@@ -138,7 +141,7 @@ func float_up():
 			floating = true
 		WATER_GRAVITY = -25
 	move.y = WATER_GRAVITY
-	if is_on_wall() && WATER_GRAVITY < 0 && position.y <= water_top+5:
+	if is_on_wall() && WATER_GRAVITY < 0 && position.y <= water_top+5: #Permite saltar para salir del agua si esta contra una pared
 		if Input.is_action_pressed("touch_jump"):
 			move.y = -jump_speed / 1.5
 			floating = false

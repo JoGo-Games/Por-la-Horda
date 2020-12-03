@@ -1,5 +1,7 @@
 extends Control
 
+#Controlador del Menu Principal del juego
+
 var menu_controller
 
 func _ready():

@@ -1,9 +1,11 @@
 extends Node
 
+#Datos de guardado
+
 const PATH = "user://data.save"
 var loaded = false
 
-var data = {
+var data = { #Datos que serán guardados y cargados 
 	"level_unlocked" : 1,
 	"sound_on" : true,
 	"music_on" : true,
@@ -24,7 +26,7 @@ var data = {
 	"stars_5" : 0,
 	}
 
-func _ready():
+func _ready(): #Busca y carga el archivo de datos o lo crea si aun no existe
 	var pathfile = File.new()
 	if pathfile.file_exists(PATH):
 		load_data()
@@ -32,7 +34,7 @@ func _ready():
 		save_data()
 		load_data()
 
-func load_data():
+func load_data(): #Carga todos los datos y los asigna a las variables de la clase global
 	if loaded:
 		return
 
@@ -60,7 +62,7 @@ func load_data():
 	loadfile.close()
 	loaded = true
 	
-func save_data():
+func save_data(): #Sobreescribe el archivo de datos con los datos actualizados
 	var savefile = File.new()
 	savefile.open(PATH,savefile.WRITE)
 	data_update()
@@ -68,7 +70,7 @@ func save_data():
 	savefile.close()
 	loaded = false
 
-func data_update():
+func data_update(): #Actualiza los datos guardados con los valores de las variables de global
 	data = {
 	"level_unlocked" : global.level_unlocked,
 	"sound_on" : global.sound_on,

@@ -1,5 +1,7 @@
 extends Control
 
+#Controlador del del Menu del nivel mostrado cuando se selecciona un nivel en el Mapa y del Menu de nivel completado
+
 var menu_controller
 signal play
 signal restart
@@ -9,9 +11,8 @@ var str_score
 func _ready():
 	menu_controller = get_parent()
 
-func set_level(_level):
+func set_level(_level): #Carga los valores correspondientes al nivel
 	$MenuBackground/VBoxContainer/Level.text = str(_level)
-	
 	set_highscore()
 
 func _on_ScoreButton_pressed():
@@ -26,7 +27,7 @@ func _on_CrossButton_pressed():
 func _on_ReplayButton_pressed():
 	emit_signal("restart")
 
-func set_highscore():
+func set_highscore(): #Carga el puntaje máximo y la cantidad de estrellas obtenidas en el nivel
 	var score_sec = global.level_score["secscore_"+str(global.current_level)]
 	var score_min = global.level_score["minscore_"+str(global.current_level)]
 	var stars = global.level_score["stars_"+str(global.current_level)]
@@ -48,7 +49,7 @@ func set_highscore():
 	if stars == 0:
 		$MenuBackground/VBoxContainer/Stars.texture.region = Rect2(0, 0, 600, 250)
 
-func set_score(_minutes, _seconds, _score_min, _score_sec, _players_dead, _stars):
+func set_score(_minutes, _seconds, _score_min, _score_sec, _players_dead, _stars): #Establece el puntaje obtenido en al completar el nivel
 	if _seconds < 10 && _minutes < 10:
 		str_score = "0%d:0%.2f" % [_minutes,_seconds]
 	if _seconds < 10 && _minutes > 10:

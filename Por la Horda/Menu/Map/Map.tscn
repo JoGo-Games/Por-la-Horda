@@ -123,6 +123,7 @@ midscore = [ 2, 0 ]
 texture = SubResource( 5 )
 
 [node name="Level5" parent="Maps" instance=ExtResource( 3 )]
+editor/display_folded = true
 position = Vector2( 2237, 570.957 )
 z_index = 0
 z_as_relative = false

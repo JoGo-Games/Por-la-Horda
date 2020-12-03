@@ -1,5 +1,7 @@
 extends Control
 
+#Controlador del Menu Options
+
 var menu_controller
 var sound = true
 var music = true
@@ -15,7 +17,7 @@ func _ready():
 	set_music_sound(global.sound_on,global.music_on)
 	menu_controller = get_parent()
 
-func set_music_sound(_sound_on, _music_on):
+func set_music_sound(_sound_on, _music_on): #Setea la música y los efectos de sónido y las texturas
 	sound = _sound_on
 	music = _music_on
 	if _sound_on:
@@ -31,7 +33,7 @@ func _on_BackButton_pressed():
 	menu_controller.animate_menu(1,previous_menu,"OptionsMenu")
 
 
-func _on_Sound_pressed():
+func _on_Sound_pressed(): #Cambia el estado de los efectos de sonido y los setea en global
 	sound = !sound
 	if sound:
 		$Background/VBoxContainer/HBoxContainer/Sound.texture_normal.region = Rect2(0,0,300,150)
@@ -39,7 +41,7 @@ func _on_Sound_pressed():
 		$Background/VBoxContainer/HBoxContainer/Sound.texture_normal.region = Rect2(300,0,300,150)
 	global.set_sound(true)
 
-func _on_Music_pressed():
+func _on_Music_pressed(): #Cambia el estado de la música y lo setea en global
 	music = !music
 	if music:
 		$Background/VBoxContainer/HBoxContainer2/Music.texture_normal.region = Rect2(0,0,300,150)

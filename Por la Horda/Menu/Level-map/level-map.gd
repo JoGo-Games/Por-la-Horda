@@ -1,5 +1,8 @@
 extends Area2D
 
+#Controlador de los seleccionadores de niveles en el Menu Mapa
+#Muestra la textura correspondiente si esta desbloqueado o bloqueado y guarda los puntajes para 2 y 3 estrellas
+
 export (Array,int) var bestscore
 export (Array,int) var midscore
 var unlocked = true

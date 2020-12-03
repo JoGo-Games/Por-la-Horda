@@ -193,6 +193,7 @@ position = Vector2( 10, 159.482 )
 points = PoolVector2Array( 50, 525, 1380, 525 )
 width = 4.0
 default_color = Color( 1, 1, 1, 1 )
+texture_mode = 0
 
 [node name="Buttons" type="HBoxContainer" parent="MenuBackground/VBoxContainer"]
 margin_top = 641.0

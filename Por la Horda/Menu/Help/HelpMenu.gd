@@ -1,5 +1,8 @@
 extends Control
 
+#Controlador del Menu Help
+#Cambia a la escena correspondiente segun el botón presionado
+
 var menu_controller
 var previous_menu
 

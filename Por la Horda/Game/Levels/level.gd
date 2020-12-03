@@ -1,12 +1,14 @@
 tool
 extends TileMap
 
-export (int) var level_buttons setget _set_level_buttons
-export (Vector2) var player_position setget _set_player_position
-export (Vector2) var door_position setget _set_door_position
+#Controlador de Level
+
+export (int) var level_buttons setget _set_level_buttons #Cantidad de botones en el nivel para abrir la puerta
+export (Vector2) var player_position setget _set_player_position #Posición del player en la escena
+export (Vector2) var door_position setget _set_door_position #Posición de la puerta en la escena
 var player = null
 var new_player = load("res://Game/Player/player.tscn")
-var players:int
+var players:int #Cantidad de players utilizados
 signal level_pass
 signal player_dead
 
@@ -28,7 +30,7 @@ func _ready():
 	$player.connect("im_dead",self,"_on_player_im_dead")
 	players = 1
 
-func _on_player_im_dead():
+func _on_player_im_dead(): #Emite la señal de muerte de player y crea un nuevo hijo player
 		player = new_player.instance()
 		add_child(player)
 		player.position = player_position
@@ -36,14 +38,14 @@ func _on_player_im_dead():
 		emit_signal("player_dead")
 		players += 1
 
-func _button_pressed():
+func _button_pressed(): #Descuenta un boton de la cantidad necesaria para abrir la puerta y chequea si debe abrir la puerta
 	level_buttons -= 1
 	if level_buttons < 1:
 		$door._open()
 
-func _button_unpressed():
+func _button_unpressed(): #Suma un botón a la cantidad necesaria para abrir la puerta
 	level_buttons += 1
 	$door._close()
 
-func _on_door_level_pass():
+func _on_door_level_pass(): #Emite la señal de nivel completo
 	emit_signal("level_pass") 

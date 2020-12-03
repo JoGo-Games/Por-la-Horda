@@ -1,5 +1,8 @@
 extends Control
 
+#Controlador del Menu In Game
+#Cambia a la escena correspondiente segun el botón presionado
+
 var menu_controller
 signal restart
 signal exit

@@ -1,5 +1,6 @@
 extends ParallaxBackground
 
+#Animación del Fondo de los niveles
 export (float) var _offset = 0
 var _off
 

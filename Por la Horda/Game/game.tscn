@@ -1,17 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Game/game.gd" type="Script" id=1]
 [ext_resource path="res://Game/Background/ParallaxBackground.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Game/UI.gd" type="Script" id=3]
-[ext_resource path="res://Sfx/Drum.ogg" type="AudioStream" id=4]
-[ext_resource path="res://Sfx/Victory.ogg" type="AudioStream" id=5]
-[ext_resource path="res://Menu/Gui/Gui.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Menu/MenuController.gd" type="Script" id=7]
-[ext_resource path="res://Menu/InGame/InGameMenu.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Menu/Options/OptionsMenu.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Menu/Level-pass/LevelPassMenu.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Sfx/Menu-Button.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Sfx/Drum.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Sfx/Victory.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Menu/Gui/Gui.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Menu/MenuController.gd" type="Script" id=6]
+[ext_resource path="res://Menu/InGame/InGameMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Menu/Options/OptionsMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Menu/Score/ScoreMenu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Menu/Level-pass/LevelPassMenu.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Sfx/Menu-Button.ogg" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fade"
@@ -44,39 +43,38 @@ z_index = -1
 [node name="UI" type="CanvasLayer" parent="."]
 pause_mode = 2
 layer = 3
-script = ExtResource( 3 )
 
 [node name="PlaySound" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource( 4 )
+stream = ExtResource( 3 )
 bus = "Sfx"
 
 [node name="VictorySound" type="AudioStreamPlayer" parent="UI"]
-stream = ExtResource( 5 )
+stream = ExtResource( 4 )
 volume_db = -15.0
 bus = "Sfx"
 
-[node name="Gui" parent="UI" instance=ExtResource( 6 )]
+[node name="Gui" parent="UI" instance=ExtResource( 5 )]
 
 [node name="Menucontroller" type="Control" parent="UI"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_bottom = 0.000732422
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 
-[node name="MainMenu" parent="UI/Menucontroller" instance=ExtResource( 8 )]
+[node name="MainMenu" parent="UI/Menucontroller" instance=ExtResource( 7 )]
 
-[node name="OptionsMenu" parent="UI/Menucontroller" instance=ExtResource( 9 )]
+[node name="OptionsMenu" parent="UI/Menucontroller" instance=ExtResource( 8 )]
 visible = false
 
-[node name="ScoreMenu" parent="UI/Menucontroller" instance=ExtResource( 10 )]
+[node name="ScoreMenu" parent="UI/Menucontroller" instance=ExtResource( 9 )]
 visible = false
 
-[node name="LevelPassMenu" parent="UI/Menucontroller" instance=ExtResource( 11 )]
+[node name="LevelPassMenu" parent="UI/Menucontroller" instance=ExtResource( 10 )]
 visible = false
 
 [node name="ButtonSound" type="AudioStreamPlayer" parent="UI/Menucontroller"]
-stream = ExtResource( 12 )
+stream = ExtResource( 11 )
 bus = "Sfx"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Menucontroller"]
